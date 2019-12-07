@@ -34,7 +34,7 @@ public class WriteThread extends Thread{
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
 
         do {
-            System.out.print(dtf.format(LocalDateTime.now()) + " [" + username + "]: ");
+            System.out.print("[" + username + "]: ");
             text = userInput.nextLine();
             writer.println(text);
         }

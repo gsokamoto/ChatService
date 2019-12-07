@@ -26,11 +26,11 @@ public class ReadThread extends Thread{
         while(true) {
             try {
                 String response = reader.readLine();
-                System.out.println("\n" + response);
+                System.out.println("\n" + dtf.format(LocalDateTime.now()) + " " + response);
 
                 if (client.getUsername() != null) {
 
-                    System.out.print(dtf.format(LocalDateTime.now()) + " [" + client.getUsername() + "]: ");
+                    System.out.print("[" + client.getUsername() + "]: ");
                 }
             } catch (IOException ex) {
                 System.out.println("You have left the chat server");
