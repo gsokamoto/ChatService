@@ -51,11 +51,10 @@ public class UserThread extends Thread {
     // print users on console, or send as string for GUI later
     public void printUsers(){
         if(chatServer.hasUsers()){
-            if (chatServer.hasUsers()) {
-                writer.println("Connected users: " + chatServer.getUsernames());
-            } else {
-                writer.println("No other users connected");
-            }
+            writer.println("Connected users: " + chatServer.getUsernames());
+        }
+        else {
+            writer.println("No other users connected");
         }
     }
 

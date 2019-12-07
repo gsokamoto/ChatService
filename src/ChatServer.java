@@ -37,9 +37,9 @@ public class ChatServer {
     }
 
     public void broadcast(String message, UserThread excludeUser){
-        for (UserThread aUser : userThreads) {
-            if(aUser != excludeUser) {
-                aUser.sendMessage(message);
+        for (UserThread user : userThreads) {
+            if(user != excludeUser) {
+                user.sendMessage(message);
             }
         }
     }
@@ -48,10 +48,10 @@ public class ChatServer {
         usernames.add(username);
     }
 
-    public void removeUser(String userName, UserThread aUser){
+    public void removeUser(String userName, UserThread user){
         boolean removed = usernames.remove(userName);
         if(removed) {
-            userThreads.remove(aUser);
+            userThreads.remove(user);
             System.out.println("The user " + userName + " left");
         }
     }
