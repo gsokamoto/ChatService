@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class ReadThread extends Thread{
     private BufferedReader reader;
@@ -20,17 +22,18 @@ public class ReadThread extends Thread{
     }
 
     public void run(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
         while(true) {
             try {
                 String response = reader.readLine();
-                System.out.println("\n" + response);
+                System.out.println("\n" + dtf.format(LocalDateTime.now()) + " " + response);
 
-                if (client.getUserName() != null) {
-                    System.out.print("[" + client.getUserName() + "]: ");
+                if (client.getUsername() != null) {
+
+                    System.out.print("[" + client.getUsername() + "]: ");
                 }
             } catch (IOException ex) {
-                System.out.println("Error reading from server: " + ex.getMessage());
-                ex.printStackTrace();
+                System.out.println("You have left the chat server");
                 break;
             }
         }

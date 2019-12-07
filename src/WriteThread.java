@@ -1,15 +1,17 @@
 import java.io.*;
 import java.net.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class WriteThread extends Thread{
     private PrintWriter writer;
     private  Socket socket;
-    private ChatClient client;
+    private ChatClient chatClient;
 
-    public WriteThread(Socket socket, ChatClient client) {
+    public WriteThread(Socket socket, ChatClient chatClient) {
         this.socket = socket;
-        this.client = client;
+        this.chatClient = chatClient;
 
         try {
             OutputStream output = socket.getOutputStream();
@@ -24,13 +26,15 @@ public class WriteThread extends Thread{
         Scanner userInput = new Scanner(System.in);
 
         System.out.print("\nEnter your username: ");
-        String userName = userInput.nextLine();
-        writer.println(userName);
+        String username = userInput.nextLine();
+        chatClient.setUsername(username);
+        writer.println(username);
 
         String text;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
 
         do {
-            System.out.print("[" + userName + "]: ");
+            System.out.print("[" + username + "]: ");
             text = userInput.nextLine();
             writer.println(text);
         }
