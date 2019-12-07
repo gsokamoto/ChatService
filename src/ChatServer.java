@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class ChatServer {
     private int port;
-    private Set<String> userNames = new HashSet<>();
+    private Set<String> usernames = new HashSet<>();
     private Set<UserThread> userThreads = new HashSet<>();
 
     public ChatServer(int port)
@@ -19,7 +19,7 @@ public class ChatServer {
             while (true) {
                 Socket socket = serverSocket.accept();
 
-                System.out.println("new user connected");
+                System.out.println("new user connected: ");
 
                 UserThread newUser = new UserThread(socket, this);
                 userThreads.add(newUser);
@@ -44,25 +44,25 @@ public class ChatServer {
         }
     }
 
-    public void addUserName(String userName){
-        userNames.add(userName);
+    public void addUsername(String username){
+        usernames.add(username);
     }
 
     public void removeUser(String userName, UserThread aUser){
-        boolean removed = userNames.remove(userName);
+        boolean removed = usernames.remove(userName);
         if(removed) {
             userThreads.remove(aUser);
-            System.out.println("The user " + userName + "left");
+            System.out.println("The user " + userName + " left");
         }
     }
 
-    public Set<String> getUserNames() {
-        return this.userNames;
-        // return this.userNames
+    public Set<String> getUsernames() {
+        return this.usernames;
+        // return this.usernames
     }
 
     boolean hasUsers() {
-        return !this.userNames.isEmpty();
+        return !this.usernames.isEmpty();
     }
 
 }

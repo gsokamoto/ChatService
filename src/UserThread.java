@@ -3,16 +3,16 @@ import java.net.*;
 
 public class UserThread extends Thread {
     private Socket socket;
-    private ChatServer server;
+    private ChatServer chatServer;
     private PrintWriter writer;
 
-    public UserThread(Socket socket, ChatServer server)
+    public UserThread(Socket socket, ChatServer chatServer)
     {
         this.socket = socket;
-        this.server = server;
+        this.chatServer = chatServer;
     }
 
-    // allow this thread to broadcast chat server
+    // allow this thread to broadcast chat chatServer
     public void run(){
         try {
             InputStream input = socket.getInputStream();
@@ -23,19 +23,24 @@ public class UserThread extends Thread {
 
             printUsers();
 
-            String userName = reader.readLine();
-            server.addUserName(userName);
+            String username = reader.readLine();
+            chatServer.addUsername(username);
 
-            String serverMessage = "New user connected: " + userName;
-            server.broadcast(serverMessage, this);
+            String serverMessage = "New user connected: " + username;
+            chatServer.broadcast(serverMessage, this);
 
-            String clientMessage;
+            String clientMessage = "";
 
-            do {
+            while (!clientMessage.equals(".")){
                 clientMessage = reader.readLine();
-                serverMessage = "[" + userName + "]: " + clientMessage;
-                server.broadcast(serverMessage, this);
-            } while (!clientMessage.equals("."));
+                serverMessage = "[" + username + "]: " + clientMessage;
+                chatServer.broadcast(serverMessage, this);
+            }
+
+            chatServer.removeUser(username, this);
+            serverMessage = username + " has left the chat room";
+            chatServer.broadcast(serverMessage, this);
+            socket.close();
 
         } catch (IOException ex) {
             System.out.println("Error in UserThread: " + ex.getMessage());
@@ -45,9 +50,9 @@ public class UserThread extends Thread {
 
     // print users on console, or send as string for GUI later
     public void printUsers(){
-        if(server.hasUsers()){
-            if (server.hasUsers()) {
-                writer.println("Connected users: " + server.getUserNames());
+        if(chatServer.hasUsers()){
+            if (chatServer.hasUsers()) {
+                writer.println("Connected users: " + chatServer.getUsernames());
             } else {
                 writer.println("No other users connected");
             }

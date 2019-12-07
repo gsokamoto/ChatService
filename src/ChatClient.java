@@ -4,10 +4,10 @@ import java.io.*;
 public class ChatClient {
     private String hostName;
     private int port;
-    private String userName;
+    private String username;
 
-    public ChatClient(String hostName, int port){
-        this.hostName = hostName;
+    public ChatClient(String ipAddress, int port){
+        this.hostName = ipAddress;
         this.port = port;
     }
 
@@ -28,12 +28,12 @@ public class ChatClient {
         }
     }
 
-    void setUserName(String userName) {
-        this.userName = userName;
+    void setUsername(String username) {
+        this.username = username;
     }
 
-    String getUserName() {
-        return userName;
+    String getUsername() {
+        return username;
     }
 
     public static void main(String[] args) {
