@@ -7,10 +7,12 @@ public class ReadThread extends Thread{
     private BufferedReader reader;
     private Socket socket;
     private ChatClient client;
+    private ChatGUI clientGUI;
 
-    public ReadThread(Socket socket , ChatClient client){
+    public ReadThread(Socket socket , ChatClient client, ChatGUI clientGUI){
         this.socket = socket;
         this.client = client;
+        this.clientGUI = clientGUI;
 
         try {
             InputStream input = socket.getInputStream();
@@ -26,14 +28,20 @@ public class ReadThread extends Thread{
         while(true) {
             try {
                 String response = reader.readLine();
-                System.out.println("\n" + dtf.format(LocalDateTime.now()) + " " + response);
+                String formatedResponse = "\n" + dtf.format(LocalDateTime.now()) + " " + response;
+                System.out.println(formatedResponse);
+                clientGUI.window.append(formatedResponse + "\n");
 
+                /*
                 if (client.getUsername() != null) {
-
-                    System.out.print("[" + client.getUsername() + "]: ");
+                    String formatedUsername = "[" + client.getUsername() + "]: ";
+                    System.out.print(formatedUsername);
+                    clientGUI.window.append(formatedUsername);
                 }
+                */
             } catch (IOException ex) {
                 System.out.println("You have left the chat server");
+                clientGUI.window.append("You have left the chat sever");
                 break;
             }
         }

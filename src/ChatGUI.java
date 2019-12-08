@@ -1,17 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class ChatGUI {
 
     private JFrame jfrm;
     private static JTextField textEntry;
-    private static JTextArea window;
+    public JTextArea window;
     private static JButton enter;
     private static JScrollPane scrollPane;
+    private ChatClient chatClient;
+    private WriteThread writeThrd;
+    private boolean hasUsername = false;
 
-    ChatGUI(){
+    ChatGUI(ChatClient chatClient, WriteThread writeThrd){
+        this.chatClient = chatClient;
+        this.writeThrd = writeThrd;
 
         jfrm = new JFrame();
         jfrm.setLayout(new FlowLayout());
@@ -22,6 +28,7 @@ public class ChatGUI {
         jfrm.setTitle("Network Messenger");
 
         window = new JTextArea();
+        window.setText("Enter your username: ");
         window.setEditable(false);
         scrollPane = new JScrollPane(window);
         scrollPane.setPreferredSize(new Dimension(400, 400));
@@ -36,8 +43,18 @@ public class ChatGUI {
 
             String text = textEntry.getText();
             textEntry.setText("");
-            window.append(text +"\n");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
 
+            if(!hasUsername) {
+                writeThrd.setUsername(text);
+                hasUsername = true;
+                window.append(text +"\n");
+            }
+            else{
+                String prefix = dtf.format(LocalDateTime.now()) + "[" + writeThrd.getUsername() + "]: ";
+                writeThrd.sendMessage(text);
+                window.append(prefix + text +"\n");
+            }
             //enter text to send
 
         });
@@ -52,8 +69,8 @@ public class ChatGUI {
 
     }
 
+/*
     public static void main (String[] args){
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -62,4 +79,5 @@ public class ChatGUI {
         });
     }
 
+*/
 }

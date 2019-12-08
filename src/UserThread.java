@@ -35,6 +35,7 @@ public class UserThread extends Thread {
                 clientMessage = reader.readLine();
                 serverMessage = "[" + username + "]: " + clientMessage;
                 chatServer.broadcast(serverMessage, this);
+                System.out.println(serverMessage);
             }
 
             chatServer.removeUser(username, this);

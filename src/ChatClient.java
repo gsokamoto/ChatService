@@ -1,10 +1,14 @@
 import java.net.*;
 import java.io.*;
+import javax.swing.*;
 
 public class ChatClient {
     private String hostName;
     private int port;
     private String username;
+    private ReadThread readThrd;
+    private WriteThread writeThrd;
+    private ChatGUI clientGUI;
 
     public ChatClient(String ipAddress, int port){
         this.hostName = ipAddress;
@@ -17,8 +21,13 @@ public class ChatClient {
 
             System.out.println("Connected to the chat server");
 
-            new ReadThread(socket, this).start();
-            new WriteThread(socket, this).start();
+            writeThrd = new WriteThread(socket, this);
+            writeThrd.start();
+
+            clientGUI = new ChatGUI(this, writeThrd);
+
+            readThrd = new ReadThread(socket, this, clientGUI);
+            readThrd.start();
 
         } catch (UnknownHostException ex) {
             System.out.println("Server not found: " + ex.getMessage());
