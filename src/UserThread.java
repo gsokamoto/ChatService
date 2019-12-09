@@ -31,10 +31,10 @@ public class UserThread extends Thread {
 
 
 
-            String clientMessage = "";
+            String clientMessage;
 
-            while (!clientMessage.equals(".")){
-                clientMessage = reader.readLine();
+            while (!(clientMessage = reader.readLine()).equals(".")){
+                //clientMessage = reader.readLine();
                 serverMessage = "[" + username + "]: " + clientMessage;
                 chatServer.broadcast(serverMessage, this);
             }
@@ -42,7 +42,7 @@ public class UserThread extends Thread {
             chatServer.removeUser(username, this);
             serverMessage = username + " has left the chat room";
             chatServer.broadcast(serverMessage, this);
-            socket.close();
+            //socket.close();
 
         } catch (IOException ex) {
             System.out.println("Error in UserThread: " + ex.getMessage());

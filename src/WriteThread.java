@@ -26,7 +26,7 @@ public class WriteThread {
 
         try {
             if (text.equals(".")) {
-                writer.print(".");
+                writer.println(".");
             }
             else
                 writer.println(text);

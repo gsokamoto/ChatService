@@ -30,9 +30,13 @@ public class ReadThread extends Thread{
         while(true) {
             try {
                 response = reader.readLine();
-                String formatedResponse = "\n" + dtf.format(LocalDateTime.now()) + " " + response;
-                //System.out.println(formatedResponse);
-                clientGUI.window.append(formatedResponse + "\n");
+                if(response != null) {
+                    String formatedResponse = "\n" + dtf.format(LocalDateTime.now()) + " " + response;
+                    //System.out.println(formatedResponse);
+                    clientGUI.window.append(formatedResponse + "\n");
+                } else {
+                    socket.close();
+                }
 
                 /*
                 if (client.getUsername() != null) {
