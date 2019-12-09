@@ -42,7 +42,7 @@ public class UserThread extends Thread {
             chatServer.removeUser(username, this);
             serverMessage = username + " has left the chat room";
             chatServer.broadcast(serverMessage, this);
-            //socket.close();
+            socket.close();
 
         } catch (IOException ex) {
             System.out.println("Error in UserThread: " + ex.getMessage());
