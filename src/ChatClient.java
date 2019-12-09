@@ -21,8 +21,9 @@ public class ChatClient {
 
             System.out.println("Connected to the chat server");
 
+            // not really a thread, may change naming later. just an object
             writeThrd = new WriteThread(socket, this);
-            writeThrd.start();
+            //writeThrd.start();
 
             clientGUI = new ChatGUI(this, writeThrd);
 

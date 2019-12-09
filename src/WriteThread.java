@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class WriteThread extends Thread{
+public class WriteThread {
     private PrintWriter writer;
     private  Socket socket;
     private ChatClient chatClient;
@@ -21,20 +21,17 @@ public class WriteThread extends Thread{
         }
     }
 
-    public void run() {
-        while(true){}
-    }
-
     public void sendMessage(String message) {
         String text = message;
 
         try {
-            if (text.equals("."))
-                socket.close();
+            if (text.equals(".")) {
+                writer.print(".");
+            }
             else
                 writer.println(text);
         }
-        catch(IOException ex){
+        catch(Exception ex){
             System.out.println("Error writing to server: " + ex.getMessage());
         }
     }

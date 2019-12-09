@@ -58,7 +58,6 @@ public class ChatServer {
 
     public Set<String> getUsernames() {
         return this.usernames;
-        // return this.usernames
     }
 
     boolean hasUsers() {

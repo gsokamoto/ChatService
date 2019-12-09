@@ -29,13 +29,14 @@ public class UserThread extends Thread {
             String serverMessage = "New user connected: " + username;
             chatServer.broadcast(serverMessage, this);
 
+
+
             String clientMessage = "";
 
             while (!clientMessage.equals(".")){
                 clientMessage = reader.readLine();
                 serverMessage = "[" + username + "]: " + clientMessage;
                 chatServer.broadcast(serverMessage, this);
-                System.out.println(serverMessage);
             }
 
             chatServer.removeUser(username, this);
@@ -51,12 +52,10 @@ public class UserThread extends Thread {
 
     // print users on console, or send as string for GUI later
     public void printUsers(){
-        if(chatServer.hasUsers()){
-            if (chatServer.hasUsers()) {
-                writer.println("Connected users: " + chatServer.getUsernames());
-            } else {
-                writer.println("No other users connected");
-            }
+        if (chatServer.hasUsers()) {
+            writer.println("Connected users: " + chatServer.getUsernames());
+        } else {
+            writer.println("No other users connected");
         }
     }
 

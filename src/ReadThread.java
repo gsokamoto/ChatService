@@ -25,11 +25,13 @@ public class ReadThread extends Thread{
 
     public void run(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+        String response = "";
+
         while(true) {
             try {
-                String response = reader.readLine();
+                response = reader.readLine();
                 String formatedResponse = "\n" + dtf.format(LocalDateTime.now()) + " " + response;
-                System.out.println(formatedResponse);
+                //System.out.println(formatedResponse);
                 clientGUI.window.append(formatedResponse + "\n");
 
                 /*
@@ -40,8 +42,8 @@ public class ReadThread extends Thread{
                 }
                 */
             } catch (IOException ex) {
-                System.out.println("You have left the chat server");
-                clientGUI.window.append("You have left the chat sever");
+                //System.out.println("You have left the chat server");
+                //clientGUI.window.append("You have left the chat sever");
                 break;
             }
         }

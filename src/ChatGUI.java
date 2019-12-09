@@ -48,14 +48,18 @@ public class ChatGUI {
             if(!hasUsername) {
                 writeThrd.setUsername(text);
                 hasUsername = true;
-                window.append(text +"\n");
+                jfrm.setTitle(text + "'s Network Messenger");
+                window.append("\nYou have successfully joined the group\n");
+                // window2.append("\n" + text +"\n");
             }
             else{
-                String prefix = dtf.format(LocalDateTime.now()) + "[" + writeThrd.getUsername() + "]: ";
+                String prefix = dtf.format(LocalDateTime.now()) + " [" + writeThrd.getUsername() + "]: ";
                 writeThrd.sendMessage(text);
-                window.append(prefix + text +"\n");
+                if(text.equals("."))
+                    window.append(" \nYou have left the chat server\n");
+                else
+                    window.append("\n" + prefix + text + "\n");
             }
-            //enter text to send
 
         });
 
